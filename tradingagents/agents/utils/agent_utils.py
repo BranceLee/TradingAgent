@@ -409,3 +409,126 @@ class Toolkit:
         )
 
         return openai_fundamentals_results
+
+    # A股市场工具
+    @staticmethod
+    @tool
+    def get_akshare_data(
+        symbol: Annotated[str, "股票代码"],
+        start_date: Annotated[str, "开始日期，格式为 yyyy-mm-dd"],
+        end_date: Annotated[str, "结束日期，格式为 yyyy-mm-dd"],
+    ) -> str:
+        """获取 A 股市场股票数据"""
+        result_data = interface.get_akshare_stock_data(symbol, start_date, end_date)
+        return result_data.to_string()
+
+    @staticmethod
+    @tool
+    def get_akshare_data_online(
+        symbol: Annotated[str, "股票代码"],
+        start_date: Annotated[str, "开始日期，格式为 yyyy-mm-dd"],
+        end_date: Annotated[str, "结束日期，格式为 yyyy-mm-dd"],
+    ) -> str:
+        """在线获取 A 股市场股票数据"""
+        result_data = interface.get_akshare_stock_data(symbol, start_date, end_date)
+        return result_data.to_string()
+
+    @staticmethod
+    @tool
+    def get_akshare_balance_sheet(
+        symbol: Annotated[str, "股票代码"],
+        freq: Annotated[str, "报告频率：annual/quarterly"],
+        curr_date: Annotated[str, "当前日期，格式为 yyyy-mm-dd"],
+    ) -> str:
+        """获取 A 股市场资产负债表"""
+        return interface.get_akshare_balance_sheet(symbol, freq, curr_date)
+
+    @staticmethod
+    @tool
+    def get_akshare_cashflow(
+        symbol: Annotated[str, "股票代码"],
+        freq: Annotated[str, "报告频率：annual/quarterly"],
+        curr_date: Annotated[str, "当前日期，格式为 yyyy-mm-dd"],
+    ) -> str:
+        """获取 A 股市场现金流量表"""
+        return interface.get_akshare_cash_flow(symbol, freq, curr_date)
+
+    @staticmethod
+    @tool
+    def get_akshare_income_stmt(
+        symbol: Annotated[str, "股票代码"],
+        freq: Annotated[str, "报告频率：annual/quarterly"],
+        curr_date: Annotated[str, "当前日期，格式为 yyyy-mm-dd"],
+    ) -> str:
+        """获取 A 股市场利润表"""
+        return interface.get_akshare_income_statement(symbol, freq, curr_date)
+
+    @staticmethod
+    @tool
+    def get_akshare_finance_analysis(
+        symbol: Annotated[str, "股票代码"],
+        curr_date: Annotated[str, "当前日期，格式为 yyyy-mm-dd"],
+    ) -> str:
+        """获取 A 股市场财务分析数据，包括主要财务指标、杜邦分析等
+        
+        返回的数据包括：
+        1. 盈利能力分析：每股收益、ROE、ROA等
+        2. 运营效率分析：毛利率、营业利润率等
+        3. 财务结构分析：资产负债率等
+        4. 杜邦分析：权益乘数、总资产周转率、销售净利率等
+        5. 关键指标汇总表：包含同比变化
+        """
+        return interface.get_akshare_finance_analysis(symbol, curr_date)
+
+    @staticmethod
+    @tool
+    def get_xueqiu_stock_info(
+        symbol: Annotated[str, "股票代码"],
+        start_date: Annotated[str, "开始日期，格式为 yyyy-mm-dd"] = None,
+        end_date: Annotated[str, "结束日期，格式为 yyyy-mm-dd"] = None,
+    ) -> str:
+        """获取雪球社交媒体数据"""
+        return interface.get_xueqiu_stock_info(symbol, start_date, end_date)
+
+    @staticmethod
+    @tool
+    def get_company_news(
+        symbol: Annotated[str, "股票代码"],
+        start_date: Annotated[str, "开始日期，格式为 yyyy-mm-dd"],
+        end_date: Annotated[str, "结束日期，格式为 yyyy-mm-dd"],
+    ) -> str:
+        """获取公司新闻和公告"""
+        return interface.get_akshare_company_news(symbol, start_date, end_date)
+
+    @staticmethod
+    @tool
+    def get_market_news(
+        start_date: Annotated[str, "开始日期，格式为 yyyy-mm-dd"],
+        end_date: Annotated[str, "结束日期，格式为 yyyy-mm-dd"],
+    ) -> str:
+        """获取市场新闻（东方财富和财联社）"""
+        return interface.get_akshare_market_news(start_date, end_date)
+
+    @staticmethod
+    @tool
+    def get_akshare_special_data(
+        symbol: Annotated[str, "股票代码"],
+        curr_date: Annotated[str, "当前日期，格式为 yyyy-mm-dd"],
+        look_back_days: Annotated[int, "往前看多少天"] = 30,
+        industry: Annotated[str, "行业名称"] = None,
+    ) -> str:
+        """获取 A 股特有市场数据，包括：
+        
+        1. 龙虎榜数据：大资金流向和主力资金动向
+        2. 大宗交易：机构投资者的交易行为
+        3. 融资融券：市场杠杆使用情况
+        4. 北向资金：外资持仓变化趋势
+        5. 行业分析：如果提供了行业名称，则包含行业分析数据
+        
+        Args:
+            symbol: 股票代码
+            curr_date: 当前日期，格式为 yyyy-mm-dd
+            look_back_days: 往前看多少天，默认30天
+            industry: 行业名称，可选参数
+        """
+        return interface.get_special_data(symbol, curr_date, look_back_days, industry)

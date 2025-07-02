@@ -22,3 +22,5 @@ redis
 chainlit
 rich
 questionary
+jinja2>=3.1.2
+streamlit>=1.32.0

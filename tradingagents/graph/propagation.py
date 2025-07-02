@@ -1,5 +1,6 @@
 # TradingAgents/graph/propagation.py
 
+import functools
 from typing import Dict, Any
 from tradingagents.agents.utils.agent_states import (
     AgentState,
@@ -24,21 +25,36 @@ class Propagator:
             "company_of_interest": company_name,
             "trade_date": str(trade_date),
             "investment_debate_state": InvestDebateState(
-                {"history": "", "current_response": "", "count": 0}
+                {
+                    "history": "",
+                    "bull_history": "",
+                    "bear_history": "",
+                    "current_response": "",
+                    "judge_decision": "",
+                    "count": 0
+                }
             ),
             "risk_debate_state": RiskDebateState(
                 {
                     "history": "",
+                    "risky_history": "",
+                    "safe_history": "",
+                    "neutral_history": "",
+                    "latest_speaker": "",
                     "current_risky_response": "",
                     "current_safe_response": "",
                     "current_neutral_response": "",
-                    "count": 0,
+                    "judge_decision": "",
+                    "count": 0
                 }
             ),
             "market_report": "",
             "fundamentals_report": "",
             "sentiment_report": "",
             "news_report": "",
+            "investment_plan": "",
+            "trader_investment_plan": "",
+            "final_trade_decision": "",
         }
 
     def get_graph_args(self) -> Dict[str, Any]:

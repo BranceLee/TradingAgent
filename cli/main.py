@@ -994,15 +994,35 @@ def run_analysis():
             if section in final_state:
                 message_buffer.update_report_section(section, final_state[section])
 
+        # Store current state for report generation
+        graph.curr_state = final_state
+        
+        # Generate HTML report using the final state directly
+        graph._log_state(selections["analysis_date"], final_state)
+        graph._generate_web_report(selections["analysis_date"], final_state)
+
         # Display the complete final report
         display_complete_report(final_state)
-
+        
         update_display(layout)
+
+        return decision
 
 
 @app.command()
 def analyze():
-    run_analysis()
+    """Run the trading agents analysis."""
+    try:
+        decision = run_analysis()
+        if decision:
+            console.print(
+                f"\n[green]Analysis completed successfully. Decision: {decision}[/green]"
+            )
+        else:
+            console.print("\n[yellow]Analysis completed with no decision.[/yellow]")
+    except Exception as e:
+        console.print(f"\n[red]Error during analysis: {str(e)}[/red]")
+        raise typer.Exit(code=1)
 
 
 if __name__ == "__main__":

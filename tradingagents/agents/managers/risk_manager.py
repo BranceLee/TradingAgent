@@ -1,11 +1,12 @@
 import time
 import json
+from ...dataflows.interface import get_market_type
 
 
 def create_risk_manager(llm, memory):
     def risk_manager_node(state) -> dict:
-
         company_name = state["company_of_interest"]
+        market_type = get_market_type()
 
         history = state["risk_debate_state"]["history"]
         risk_debate_state = state["risk_debate_state"]
@@ -22,7 +23,29 @@ def create_risk_manager(llm, memory):
         for i, rec in enumerate(past_memories, 1):
             past_memory_str += rec["recommendation"] + "\n\n"
 
-        prompt = f"""As the Risk Management Judge and Debate Facilitator, your goal is to evaluate the debate between three risk analysts—Risky, Neutral, and Safe/Conservative—and determine the best course of action for the trader. Your decision must result in a clear recommendation: Buy, Sell, or Hold. Choose Hold only if strongly justified by specific arguments, not as a fallback when all sides seem valid. Strive for clarity and decisiveness.
+        if market_type == "CN":
+            prompt = f"""作为风险管理评审和辩论主持人，你的目标是评估三位风险分析师（激进派、中立派和保守派）之间的辩论，并为交易员确定最佳行动方案。你的决策必须得出明确的建议：买入、卖出或持有。只有在有充分具体论据支持的情况下才选择持有，而不是在所有观点都似乎合理时的默认选择。力求清晰和果断。
+
+决策指南：
+1. **总结关键论点**：提取每位分析师最有力的观点，重点关注与当前情况的相关性。
+2. **提供理由**：用辩论中的直接引用和反驳论点支持你的建议。
+3. **完善交易员计划**：从交易员的原始计划出发，**{trader_plan}**，根据分析师的见解进行调整。
+4. **吸取过往教训**：利用 **{past_memory_str}** 中的经验教训来纠正之前的判断失误，确保现在的决策不会做出导致亏损的错误买入/卖出/持有建议。
+
+输出要求：
+- 明确且可执行的建议：买入、卖出或持有
+- 基于辩论和过往反思的详细推理过程
+
+---
+
+**分析师辩论历史：**  
+{history}
+
+---
+
+专注于可执行的见解和持续改进。借鉴过往经验，批判性评估所有观点，确保每个决策都能带来更好的结果。"""
+        else:
+            prompt = f"""As the Risk Management Judge and Debate Facilitator, your goal is to evaluate the debate between three risk analysts—Risky, Neutral, and Safe/Conservative—and determine the best course of action for the trader. Your decision must result in a clear recommendation: Buy, Sell, or Hold. Choose Hold only if strongly justified by specific arguments, not as a fallback when all sides seem valid. Strive for clarity and decisiveness.
 
 Guidelines for Decision-Making:
 1. **Summarize Key Arguments**: Extract the strongest points from each analyst, focusing on relevance to the context.

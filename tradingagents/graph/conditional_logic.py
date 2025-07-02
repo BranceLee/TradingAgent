@@ -45,12 +45,29 @@ class ConditionalLogic:
 
     def should_continue_debate(self, state: AgentState) -> str:
         """Determine if debate should continue."""
+        # 检查状态完整性
+        if not state.get("investment_debate_state"):
+            return "Bull Researcher"
 
-        if (
-            state["investment_debate_state"]["count"] >= 2 * self.max_debate_rounds
-        ):  # 3 rounds of back-and-forth between 2 agents
+        debate_state = state["investment_debate_state"]
+        
+        # 检查必要字段
+        if not isinstance(debate_state, dict):
+            return "Bull Researcher"
+            
+        if not debate_state.get("count"):
+            debate_state["count"] = 0
+            
+        if not debate_state.get("current_response"):
+            return "Bull Researcher"
+
+        # 检查辩论轮次
+        if debate_state["count"] >= 2 * self.max_debate_rounds:
             return "Research Manager"
-        if state["investment_debate_state"]["current_response"].startswith("Bull"):
+            
+        # 检查当前发言者并决定下一个发言者
+        current_response = debate_state["current_response"]
+        if current_response.startswith("Bull") or current_response.startswith("多方"):
             return "Bear Researcher"
         return "Bull Researcher"
 
