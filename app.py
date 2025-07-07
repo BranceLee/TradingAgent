@@ -1,4 +1,9 @@
 import streamlit as st
+import pysqlite3
+import sys
+sys.modules['sqlite3'] = pysqlite3
+import sqlite3  # 所有后续模块都会使用 pysqlite3 提供的 sqlite3
+import chromadb
 import os
 import datetime
 import json
@@ -9,11 +14,6 @@ from cli.models import AnalystType
 import pandas as pd
 import shutil
 import time
-import pysqlite3
-import sys
-sys.modules['sqlite3'] = pysqlite3
-import sqlite3  # 所有后续模块都会使用 pysqlite3 提供的 sqlite3
-import chromadb
 
 import psutil
 
