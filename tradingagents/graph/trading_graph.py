@@ -63,7 +63,7 @@ class TradingAgentsGraph:
 
         # 配置 Deepseek API 基础 URL 和 API Key
         base_url = "https://api.deepseek.com/v1"
-        api_key = os.getenv("DEEPSEEK_API_KEY")
+        api_key = os.getenv("OPENAI_API_KEY")
 
         # Initialize LLMs with Deepseek configuration
         self.deep_thinking_llm = ChatOpenAI(
