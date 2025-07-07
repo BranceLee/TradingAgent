@@ -102,6 +102,9 @@ You will need the OpenAI API for all the agents.
 export OPENAI_API_KEY=$YOUR_OPENAI_API_KEY
 ```
 
+### Web Usage
+```streamlit run app.py```
+
 ### CLI Usage
 
 You can also try out the CLI directly by running:
