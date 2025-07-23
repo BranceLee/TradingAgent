@@ -25,4 +25,4 @@ questionary
 jinja2>=3.1.2
 streamlit>=1.32.0
 chromadb
-pysqlite3-binary
+# pysqlite3-binary

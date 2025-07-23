@@ -1,9 +1,4 @@
 import streamlit as st
-import pysqlite3
-import sys
-sys.modules['sqlite3'] = pysqlite3
-import sqlite3  # 所有后续模块都会使用 pysqlite3 提供的 sqlite3
-import chromadb
 import os
 import datetime
 import json
@@ -12,9 +7,11 @@ from tradingagents.graph.trading_graph import TradingAgentsGraph
 from tradingagents.default_config import DEFAULT_CONFIG
 from cli.models import AnalystType
 import pandas as pd
+import chromadb
 import shutil
 import time
-
+import sqlite3
+import sys
 import psutil
 
 # Set page config
