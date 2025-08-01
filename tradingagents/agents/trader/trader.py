@@ -11,7 +11,7 @@ def create_trader(llm, memory):
         sentiment_report = state["sentiment_report"]
         news_report = state["news_report"]
         fundamentals_report = state["fundamentals_report"]
-        market_type = state.get("market_type", "EN")  # Default to English market if not specified
+        market_type = state.get("market_type", "CN")  # Default to English market if not specified
 
         curr_situation = f"{market_research_report}\n\n{sentiment_report}\n\n{news_report}\n\n{fundamentals_report}"
         past_memories = memory.get_memories(curr_situation, n_matches=2)
@@ -21,7 +21,7 @@ def create_trader(llm, memory):
             past_memory_str += rec["recommendation"] + "\n\n"
 
         if market_type == "CN":
-            system_content = f"""您是一位专业的交易员，负责分析市场数据并做出投资决策。基于您的分析，请提供明确的买入、卖出或持有建议。在分析时请特别关注A股市场特征（如涨跌停限制、交易规则等）、中国特色的政策和监管环境、国内外宏观经济形势对A股的影响、技术面和基本面分析、市场情绪和交易者心理因素、行业政策和产业周期、相关概念板块联动性等。请从过往类似交易情况中吸取经验教训：{past_memory_str}请在回复的最后以"最终交易建议：**买入/持有/卖出**"的格式确认您的建议。"""
+            system_content = f"""您是一位资深专业优秀经验丰富的交易员，负责分析市场数据并做出投资决策。基于您的分析，请提供明确的买入、卖出或持有建议。在分析时请特别关注A股市场特征（如涨跌停限制、交易规则等）、中国特色的政策和监管环境、国内外宏观经济形势对A股的影响、技术面和基本面分析、市场情绪和交易者心理因素、行业政策和产业周期、相关概念板块联动性等。请从过往类似交易情况中吸取经验教训：{past_memory_str}请在回复的最后以"最终交易建议：**买入/持有/卖出**"的格式确认您的建议。"""
 
             context = {
                 "role": "user",
