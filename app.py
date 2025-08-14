@@ -393,13 +393,13 @@ def main():
         with col1:
             shallow_thinker = st.selectbox(
                 "Quick Thinking Model",
-                options=["deepseek-chat", "deepseek-reasoner"],
+                options=["deepseek-reasoner", "deepseek-chat"],
                 index=0
             )
         with col2:
             deep_thinker = st.selectbox(
                 "Deep Thinking Model",
-                options=["deepseek-chat", "deepseek-reasoner"],
+                options=["deepseek-reasoner", "deepseek-chat", ],
                 index=0
             )
 
