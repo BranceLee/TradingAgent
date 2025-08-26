@@ -58,4 +58,4 @@ cron.schedule(scheduleTime, schedule, {
 });
 
 // Debug
-schedule()
+// schedule()

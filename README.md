@@ -103,7 +103,6 @@ export OPENAI_API_KEY=$YOUR_OPENAI_API_KEY
 ```
 
 ### Web Usage
-```streamlit run app.py```
 
 ### CLI Usage
 
