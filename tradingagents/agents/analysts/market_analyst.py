@@ -9,7 +9,6 @@ def create_market_analyst(llm, toolkit):
     def market_analyst_node(state):
         current_date = state["trade_date"]
         ticker = state["company_of_interest"]
-        company_name = state["company_of_interest"]
         market_type = get_market_type()
 
         if market_type == "CN":

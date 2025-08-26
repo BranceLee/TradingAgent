@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",   // 或 "NodeNext" / "ESNext"（需配合 type: "module"）
+    "target": "ESNext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "types": ["node", "playwright"]  // 加上 node 类型
+  }
+}

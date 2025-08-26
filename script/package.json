@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "analysis": "playwright test --config=playwright.config.ts",
+    "task": "node index.js"
+  },
+  "dependencies": {
+    "@playwright/test": "1.55.0",
+    "node-cron": "^4.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0"
+  }
+}
