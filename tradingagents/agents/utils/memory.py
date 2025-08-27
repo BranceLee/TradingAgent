@@ -71,7 +71,7 @@ class FinancialSituationMemory:
             # 如果文本长度在限制之内，直接处理
             if len(text) <= CHUNK_SIZE:
                 response = self.client.embeddings.create(
-                    model="doubao-embedding-text-240715", 
+                    model="doubao-embedding-large-text-240915", 
                     input=text
                 )
                 return response.data[0].embedding
@@ -87,7 +87,7 @@ class FinancialSituationMemory:
                 print(f"Processing chunk {i+1}/{len(chunks)} (length: {len(chunk)})")
                 try:
                     response = self.client.embeddings.create(
-                        model="doubao-embedding-text-240715", 
+                        model="doubao-embedding-large-text-240915", 
                         input=chunk
                     )
                     embeddings.append(response.data[0].embedding)

@@ -8,6 +8,6 @@ eval_data/
 *.egg-info/
 reports
 report_debug.txt
-Makefile
 node_modules
 test-results
+.env

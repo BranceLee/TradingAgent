@@ -69,6 +69,49 @@ Our framework decomposes complex trading tasks into specialized roles. This ensu
   <img src="assets/trader.png" width="70%" style="display: inline-block; margin: 0 2%;">
 </p>
 
+## Technical Architecture
+
+### Dual AI Service Provider Design
+TradingAgents leverages two specialized AI service providers for optimal performance:
+
+#### DeepSeek (Primary LLM)
+- **Purpose**: All reasoning, analysis, and decision-making tasks
+- **API Endpoint**: `https://api.deepseek.com/v1`
+- **Models Used**: 
+  - `deepseek-chat` (Quick thinking)
+  - `deepseek-reasoner` (Deep thinking)
+- **Functions**: 
+  - Data analysis and report generation
+  - Multi-round debates and argumentation
+  - Risk assessment and decision making
+
+#### Doubao (Volces - Vector Services)
+- **Purpose**: Vector embedding and similarity retrieval for experience memory
+- **API Endpoint**: `https://ark.cn-beijing.volces.com/api/v3/`
+- **Model**: `doubao-embedding-large-text-240915`
+- **Functions**:
+  - Text vectorization processing
+  - Similar experience retrieval
+  - Long text chunk processing
+
+### System Workflow
+```
+User Input → TradingAgentsGraph → Data Layer → Analysis Layer → Decision Layer → Risk Layer → Memory Layer → Report Layer
+   ↓           ↓           ↓         ↓        ↓        ↓        ↓        ↓
+Configuration  DeepSeek LLM   Data Sources  Agents    Debate    Risk Assessment  Vector Memory  Report Generation
+   ↓           ↓           ↓         ↓        ↓        ↓        ↓        ↓
+Environment    Doubao Embedding  Tool Nodes   State    Conditional   Decision Fusion  ChromaDB    Template Rendering
+```
+
+### Core Data Flow
+1. **Data Acquisition**: Analyst agents use tools to fetch market data
+2. **Analysis Processing**: DeepSeek LLM analyzes data and generates reports
+3. **Debate Process**: Bull/Bear researchers debate investment decisions
+4. **Risk Assessment**: Risk team evaluates potential risks
+5. **Memory Storage**: Doubao vectorizes experiences and stores in ChromaDB
+6. **Experience Retrieval**: Similar historical experiences are retrieved for learning
+7. **Report Generation**: Comprehensive HTML/Markdown reports are created
+
 ## Installation and CLI
 
 ### Installation
@@ -100,6 +143,11 @@ export FINNHUB_API_KEY=$YOUR_FINNHUB_API_KEY
 You will need the OpenAI API for all the agents.
 ```bash
 export OPENAI_API_KEY=$YOUR_OPENAI_API_KEY
+```
+
+You will need the Volces API for vector services.
+```bash
+export VOLCES_API_KEY=$YOUR_VOLCES_API_KEY
 ```
 
 ### Web Usage
@@ -172,6 +220,12 @@ print(decision)
 > For `online_tools`, we recommend enabling them for experimentation, as they provide access to real-time data. The agents' offline tools rely on cached data from our **Tauric TradingDB**, a curated dataset we use for backtesting. We're currently in the process of refining this dataset, and we plan to release it soon alongside our upcoming projects. Stay tuned!
 
 You can view the full list of configurations in `tradingagents/default_config.py`.
+
+## Documentation
+
+For detailed technical documentation, please refer to:
+- [PROJECT_DOCUMENTATION.md](Document/PROJECT_DOCUMENTATION.md) - Complete technical architecture and business process documentation
+- [README_QUICKSTART.md](Document/README_QUICKSTART.md) - Quick start guide and frequently asked questions
 
 ## Contributing
 

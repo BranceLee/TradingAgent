@@ -220,6 +220,48 @@ class AKShareNewsUtils:
             return []
 
     @staticmethod
+    def get_xueqiu_stock_info(
+        symbol: Annotated[str, "股票代码"],
+        start_date: str = None,  # 参数保留但实际未使用
+        end_date: str = None
+    ) -> str:
+        """
+        获取雪球社交媒体数据（热门讨论+用户关注度）
+        参数:
+            symbol: 股票代码 (如 "600000")
+        返回:
+            格式化报告字符串
+        """
+        
+        # 获取热门讨论数据
+        try:
+            tweet_df = ak.stock_hot_tweet_xq(symbol="最热门")  # 可选"最热门"/"本周新增"
+            stock_tweets = tweet_df[tweet_df["股票代码"] == symbol]
+            tweet_info = stock_tweets.to_string(index=False) if not stock_tweets.empty else "无近期热门讨论"
+        except Exception as e:
+            tweet_info = f"热门讨论获取失败: {str(e)}"
+        
+        # 获取用户关注度数据
+        try:
+            follow_df = ak.stock_hot_follow_xq(symbol="最热门")
+            stock_follows = follow_df[follow_df["股票代码"] == symbol]
+            follow_info = stock_follows.to_string(index=False) if not stock_follows.empty else "无关注度数据"
+        except Exception as e:
+            follow_info = f"关注度获取失败: {str(e)}"
+        
+        # 格式化报告
+        return f"""
+        === 雪球社交媒体报告 ===
+        股票: {symbol} ({symbol})
+        
+        【热门讨论】
+        {tweet_info}
+        
+        【用户关注度】
+        {follow_info}
+        """
+
+    @staticmethod
     @convert_symbol
     def get_xueqiu_discussions(
         symbol: Annotated[str, "股票代码"],

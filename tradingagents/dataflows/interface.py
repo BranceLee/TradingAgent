@@ -99,14 +99,11 @@ def get_xueqiu_stock_info(
     end_date: Annotated[str, "结束日期，格式为 yyyy-mm-dd"] = None,
 ) -> str:
     """获取雪球社交媒体数据，包括热门讨论、用户关注度等"""
-    discussions = AKShareNewsUtils.get_xueqiu_discussions(symbol)
-    # followers = AKShareNewsUtils.get_xueqiu_followers(symbol)  # 假设有这个方法
-    # sentiment = AKShareNewsUtils.get_xueqiu_sentiment(symbol)  # 假设有这个方法
-    
-    return AKShareNewsUtils.format_social_report(
-        discussions=discussions
-        # followers=followers,
-        # sentiment=sentiment
+
+    return AKShareNewsUtils.get_xueqiu_stock_info(
+        symbol,
+        start_date,
+        end_date
     )
 
 def get_akshare_company_news(
