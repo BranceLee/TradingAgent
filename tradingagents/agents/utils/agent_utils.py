@@ -540,3 +540,22 @@ class Toolkit:
             industry: 行业名称，可选参数
         """
         return interface.get_special_data(symbol, curr_date, look_back_days, industry)
+
+    @staticmethod
+    @tool
+    def get_major_indices_report(
+        curr_date: Annotated[str, "当前日期，格式为 yyyy-mm-dd"],
+        look_back_days: Annotated[int, "往前看多少天"] = 30,
+    ) -> str:
+        """获取主要指数报告，包括上证指数、深证成指、创业板指的数据
+        
+        这个工具为市场分析提供大盘走势参考，帮助判断当前市场环境是牛市、熊市还是震荡市。
+        
+        Args:
+            curr_date: 当前日期，格式为 yyyy-mm-dd
+            look_back_days: 往前看多少天，默认30天
+            
+        Returns:
+            str: 格式化的指数数据分析报告
+        """
+        return interface.get_major_indices_data(curr_date, look_back_days)

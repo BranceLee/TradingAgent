@@ -37,7 +37,11 @@ MACD相关：
 成交量指标：
 - vwma: 成交量加权移动平均线：用成交量加权的移动平均线。用途：通过整合价格行为和成交量数据确认趋势。提示：注意成交量突增可能导致的偏差；与其他成交量分析结合使用。
 
-请选择能提供多样化和互补信息的指标。避免冗余（例如，不要同时选择rsi和stochrsi）。同时简要解释为什么这些指标适合当前市场环境。调用工具时，请使用上述指标的确切名称，否则调用将失败。请确保先调用get_akshare_data以获取生成指标所需的数据。对观察到的趋势进行详细和细致的报告。不要简单地说趋势是混合的，请提供详细和细致的分析和见解，以帮助交易者做出决策。"""
+市场环境背景：
+- 过去30天中国主要指数数据分析
+
+
+请选择能提供多样化和互补信息的指标。避免冗余（例如，不要同时选择rsi和stochrsi）。同时简要解释为什么这些指标适合当前市场环境。调用工具时，请使用上述指标的确切名称，否则调用将失败。请确保先调用get_akshare_data以获取生成指标所需的数据。并调用get_major_indices_report结合A股指数,对观察到的趋势进行详细和细致的报告。不要简单地说趋势是混合的，请提供详细和细致的分析和见解，以帮助交易者做出决策。"""
                 + """请在报告末尾添加一个 Markdown 表格，以组织和总结报告中的要点，使其易于阅读。"""
             )
             # A 股市场工具
@@ -45,11 +49,13 @@ MACD相关：
                 tools = [
                     toolkit.get_akshare_data_online,  # 使用 AKShare 在线获取数据
                     toolkit.get_stockstats_indicators_report_online,
+                    toolkit.get_major_indices_report,
                 ]
             else:
                 tools = [
                     toolkit.get_akshare_data,  # 使用 AKShare 离线数据
                     toolkit.get_stockstats_indicators_report,
+                    toolkit.get_major_indices_report,  # 添加主要指数报告工具
                 ]
         else:
             system_message = (
@@ -89,6 +95,7 @@ Select indicators that provide diverse and complementary information. Avoid redu
                 tools = [
                     toolkit.get_YFin_data,
                     toolkit.get_stockstats_indicators_report,
+                    toolkit.get_major_indices_report,
                 ]
 
         if market_type == "CN":

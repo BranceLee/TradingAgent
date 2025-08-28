@@ -8,6 +8,7 @@ from .akshare_utils import AKShareUtils
 from .akshare_finance_utils import AKShareFinanceUtils
 from .akshare_news_utils import AKShareNewsUtils
 from .akshare_special_utils import AKShareSpecialUtils
+from .akshare_index_utils import AKShareIndexUtils
 from dateutil.relativedelta import relativedelta
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
@@ -973,3 +974,37 @@ def get_special_data(
         north_flow=north_flow,
         industry_analysis=industry_analysis
     )
+
+
+def get_major_indices_data(
+    curr_date: Annotated[str, "当前日期，格式为 yyyy-mm-dd"],
+    look_back_days: Annotated[int, "往前看多少天"] = 30,
+) -> str:
+    """
+    获取主要指数数据（上证指数、深证成指、创业板指）用于市场分析
+    
+    Args:
+        curr_date: 当前日期，格式为 yyyy-mm-dd
+        look_back_days: 往前看多少天，默认30天
+        
+    Returns:
+        str: 格式化的指数数据报告
+    """
+    market_type = get_market_type()
+    
+    if market_type != "CN":
+        return "仅支持 A 股市场"
+    
+    start_date = datetime.strptime(curr_date, "%Y-%m-%d")
+    before = start_date - relativedelta(days=look_back_days)
+    before = before.strftime("%Y-%m-%d")
+    
+    # 获取主要指数数据
+    indices_data = AKShareIndexUtils.get_major_indices_data(before, curr_date)
+    
+    if not indices_data:
+        return "无法获取主要指数数据"
+    
+    report = f"## 主要A股指数数据分析 (从 {before} 到 {curr_date}) \n\n" + indices_data
+    
+    return report

@@ -52,7 +52,6 @@ class TradingAgentsGraph:
 
         # Update the interface's config
         set_config(self.config)
-        print(f'TradingAgentsGraph init self.config: {self.config}')
 
         # Create necessary directories
         os.makedirs(
@@ -128,6 +127,7 @@ class TradingAgentsGraph:
                         # online tools
                         self.toolkit.get_akshare_data_online,
                         self.toolkit.get_stockstats_indicators_report_online,
+                        self.toolkit.get_major_indices_report,  # 添加主要指数报告工具
                         # offline tools
                         self.toolkit.get_akshare_data,
                         self.toolkit.get_stockstats_indicators_report,
