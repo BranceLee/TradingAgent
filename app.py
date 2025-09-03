@@ -464,6 +464,9 @@ def main():
             (filtered_df['date'] >= date_filter[0].strftime('%Y-%m-%d')) &
             (filtered_df['date'] <= date_filter[1].strftime('%Y-%m-%d'))
         ]
+        
+        # Sort by date descending and ticker ascending
+        filtered_df = filtered_df.sort_values(['date', 'ticker'], ascending=[False, True])
 
         # Display reports
         for _, report in filtered_df.iterrows():
